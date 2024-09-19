@@ -36,8 +36,8 @@ def download_csv(data):
 def main():
     st.title("Time Management Sheet")
 
-    # Login form
     if not st.session_state.logged_in:
+        # Show login form if not logged in
         st.header("Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type='password')
@@ -71,8 +71,8 @@ def main():
             st.session_state.role = None
             st.success("You have been logged out. Please log in again.")
 
-            # Display the login form again
-            st.experimental_rerun()  # Keep this to refresh the state
+            # Instead of rerun, just render the login form next
+            st.experimental_set_query_params(logged_out=True)  # Optional: Set a query param
 
 if __name__ == "__main__":
     main()
