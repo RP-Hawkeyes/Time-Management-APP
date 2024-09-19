@@ -66,9 +66,11 @@ def main():
             st.markdown(download_csv(data), unsafe_allow_html=True)
 
         if st.button("Logout"):
+            # Clear session state
             st.session_state.logged_in = False
             st.session_state.role = None
-            st.experimental_rerun()  # Rerun to reset the app
+            # Instead of rerun, just render the login form again
+            st.experimental_rerun()  # Ensure this is the last statement in the block
 
 if __name__ == "__main__":
     main()
