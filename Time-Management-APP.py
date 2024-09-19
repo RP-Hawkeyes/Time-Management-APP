@@ -44,7 +44,6 @@ def main():
 
         if st.button("Login"):
             login(username, password)
-
     else:
         st.success(f"Logged in as {st.session_state.role}")
 
@@ -71,8 +70,12 @@ def main():
             st.session_state.role = None
             st.success("You have been logged out. Please log in again.")
 
-            # Instead of rerun, just render the login form next
-            st.experimental_set_query_params(logged_out=True)  # Optional: Set a query param
+            # Instead of using rerun, simply set a flag to show the login page
+            st.session_state.show_login = True
+
+    # Render login page if not logged in
+    if not st.session_state.logged_in:
+        st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
