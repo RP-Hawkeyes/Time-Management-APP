@@ -66,10 +66,13 @@ def main():
             st.markdown(download_csv(data), unsafe_allow_html=True)
 
         if st.button("Logout"):
-            # Clear session state without rerun
+            # Clear session state
             st.session_state.logged_in = False
             st.session_state.role = None
-            st.write("You have been logged out. Please log in again.")
+            st.success("You have been logged out. Please log in again.")
+
+            # Refresh the display to show the login form
+            st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
