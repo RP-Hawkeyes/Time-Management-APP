@@ -36,16 +36,16 @@ def download_csv(data):
 def main():
     st.title("Time Management Sheet")
 
+    # Login form
     if not st.session_state.logged_in:
-        # Login form
         st.header("Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type='password')
 
         if st.button("Login"):
             login(username, password)
-    
-    if st.session_state.logged_in:
+
+    else:
         st.success(f"Logged in as {st.session_state.role}")
 
         # Display relevant data based on user role
@@ -71,8 +71,8 @@ def main():
             st.session_state.role = None
             st.success("You have been logged out. Please log in again.")
 
-            # Refresh the display to show the login form
-            st.experimental_rerun()
+            # Display the login form again
+            st.experimental_rerun()  # Keep this to refresh the state
 
 if __name__ == "__main__":
     main()
