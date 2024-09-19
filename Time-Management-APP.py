@@ -28,8 +28,7 @@ def login(username, password):
 def download_csv(data):
     csv = data.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="time_management_data.csv">Download CSV</a>'
-    return href
+    return f'<a href="data:file/csv;base64,{b64}" download="time_management_data.csv">Download CSV</a>'
 
 # Streamlit app
 def main():
@@ -43,10 +42,8 @@ def main():
 
         if st.button("Login"):
             login(username, password)
-            if st.session_state.logged_in:
-                st.experimental_rerun()  # Only rerun if login is successful
     
-    else:
+    if st.session_state.logged_in:
         st.success(f"Logged in as {st.session_state.role}")
 
         # Display relevant data based on user role
