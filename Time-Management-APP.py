@@ -21,8 +21,10 @@ def login(username, password):
     if username in USER_DATA and USER_DATA[username]['password'] == password:
         st.session_state.logged_in = True
         st.session_state.role = USER_DATA[username]['role']
+        return True
     else:
         st.error("Invalid username or password")
+        return False
 
 # Function to download CSV
 def download_csv(data):
