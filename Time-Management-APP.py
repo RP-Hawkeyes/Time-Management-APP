@@ -10,7 +10,7 @@ USER_DATA = {
     'manager': {'password': 'mgr123', 'role': 'Manager'}
 }
 
-# Initialize session state
+# Initialize session state if not already done
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 if 'role' not in st.session_state:
@@ -27,7 +27,7 @@ def login(username, password):
 # Function to download CSV
 def download_csv(data):
     csv = data.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()  # Encode as base64
+    b64 = base64.b64encode(csv.encode()).decode()
     href = f'<a href="data:file/csv;base64,{b64}" download="time_management_data.csv">Download CSV</a>'
     return href
 
@@ -43,20 +43,20 @@ def main():
 
         if st.button("Login"):
             login(username, password)
+            if st.session_state.logged_in:
+                st.experimental_rerun()  # Only rerun if login is successful
     
     else:
         st.success(f"Logged in as {st.session_state.role}")
-        
+
         # Display relevant data based on user role
         if st.session_state.role in ['Production', 'QA']:
             st.write("Welcome to the Time Management Sheet!")
             st.write("You have limited access.")
-            # Example of limited functionality
             st.text_area("Log your hours worked:")
         elif st.session_state.role in ['TL', 'Manager']:
             st.write("Welcome to the Time Management Sheet!")
             st.write("You have full access.")
-            # Example of full functionality
             data = pd.DataFrame({
                 'Employee': ['Employee1', 'Employee2'],
                 'Hours Worked': [8, 7]
@@ -69,7 +69,7 @@ def main():
         if st.button("Logout"):
             st.session_state.logged_in = False
             st.session_state.role = None
-            st.experimental_rerun()
+            st.experimental_rerun()  # Rerun to reset the app
 
 if __name__ == "__main__":
     main()
